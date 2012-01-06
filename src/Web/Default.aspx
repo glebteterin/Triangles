@@ -53,7 +53,8 @@
             </MasterTableView>
         </telerik:RadGrid>
 
-        <asp:Button runat="server" ID="btnCalculate" Text="Расчёт" OnClick="btnCalculate_Click"/>
+        <asp:Button runat="server" ID="btnCalculate" Text="Расчёт с потоками" OnClick="btnCalculate_Click"/>
+        <asp:Button runat="server" ID="btnCalculateWithCommontFund" Text="Расчёт с общим котлом" OnClick="btnCalculateWithCommontFund_Click"/>
     </div>
     </form>
 </body>

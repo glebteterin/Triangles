@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonFundCalculator.cs" />
     <Compile Include="Credit.cs" />
     <Compile Include="DataAccess\ExpenditureRepository.cs" />
     <Compile Include="DataAccess\Triangles.designer.cs">

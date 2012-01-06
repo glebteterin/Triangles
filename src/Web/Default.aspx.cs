@@ -52,5 +52,10 @@ namespace Triangles.Web
 		{
 			Response.Redirect("/CalculationResult.aspx");
 		}
+
+		protected void btnCalculateWithCommontFund_Click(object sender, EventArgs e)
+		{
+			Response.Redirect("/CalculationWithCommonFundResult.aspx");
+		}
 	}
 }

@@ -10,7 +10,7 @@
 namespace Triangles.Web {
     
     
-    public partial class Default {
+    public partial class CalculationWithCommonFundResult {
         
         /// <summary>
         /// form1 control.
@@ -22,39 +22,21 @@ namespace Triangles.Web {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// RadScriptManager1 control.
+        /// lvRecords control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadScriptManager RadScriptManager1;
+        protected global::System.Web.UI.WebControls.ListView lvRecords;
         
         /// <summary>
-        /// rgExpenditures control.
+        /// lvTransfers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid rgExpenditures;
-        
-        /// <summary>
-        /// btnCalculate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCalculate;
-        
-        /// <summary>
-        /// btnCalculateWithCommontFund control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCalculateWithCommontFund;
+        protected global::System.Web.UI.WebControls.ListView lvTransfers;
     }
 }

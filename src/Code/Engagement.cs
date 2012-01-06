@@ -5,7 +5,7 @@
     /// </summary>
     public class Engagement
     {
-        public int Who { get; set; }
+        public string Who { get; set; }
         public decimal Amount { get; set; }
     }
 }

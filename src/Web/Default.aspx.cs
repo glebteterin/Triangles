@@ -20,10 +20,7 @@ namespace Triangles.Web
 
 		protected void rgExpenditures_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
 		{
-			using(var context = new TrianglesDataContext())
-			{
-				rgExpenditures.DataSource = context.Expenditures.ToList();
-			}
+			rgExpenditures.DataSource = _repository.All();
 		}
 
 		protected void rgExpenditures_UpdateCommand(object source, GridCommandEventArgs e)
@@ -37,6 +34,23 @@ namespace Triangles.Web
 			expenditure.Amount = decimal.Parse((userControl.FindControl("txtAmount") as TextBox).Text);
 
 			_repository.Update(expenditure);
+		}
+
+		protected void rgExpenditures_InsertCommand(object source, GridCommandEventArgs e)
+		{
+			UserControl userControl = (UserControl)e.Item.FindControl(GridEditFormItem.EditFormUserControlID);
+
+			var expenditure = new Expenditure();
+			expenditure.Who = (userControl.FindControl("txtWho") as TextBox).Text;
+			expenditure.Description = (userControl.FindControl("txtDescription") as TextBox).Text;
+			expenditure.Amount = decimal.Parse((userControl.FindControl("txtAmount") as TextBox).Text);
+
+			_repository.Save(expenditure);
+		}
+
+		protected void btnCalculate_Click(object sender, EventArgs e)
+		{
+			Response.Redirect("/CalculationResult.aspx");
 		}
 	}
 }

@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CalculationResult.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="ExpenditureEditForm.ascx" />
     <Content Include="Web.config" />
@@ -68,6 +69,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculationResult.aspx.cs">
+      <DependentUpon>CalculationResult.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalculationResult.aspx.designer.cs">
+      <DependentUpon>CalculationResult.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

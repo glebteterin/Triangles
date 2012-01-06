@@ -18,7 +18,8 @@
                       AllowAutomaticInserts="False"
                       AllowAutomaticUpdates="False"
                       EnableLinqExpressions="False"
-                      OnUpdateCommand="rgExpenditures_UpdateCommand">
+                      OnUpdateCommand="rgExpenditures_UpdateCommand"
+                      OnInsertCommand="rgExpenditures_InsertCommand">
             <MasterTableView />
             <PagerStyle Mode="NextPrevAndNumeric" />
             <ClientSettings AllowDragToGroup="True" />
@@ -51,6 +52,8 @@
                 </EditFormSettings>
             </MasterTableView>
         </telerik:RadGrid>
+
+        <asp:Button runat="server" ID="btnCalculate" Text="Расчёт" OnClick="btnCalculate_Click"/>
     </div>
     </form>
 </body>

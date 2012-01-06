@@ -5,7 +5,7 @@ namespace Triangles.Code
 {
     public class Calculator
     {
-        public Transfer[] CalculateTransfers(Expenditure[] expenditures, int[] partners)
+        public Transfer[] CalculateTransfers(Expenditure[] expenditures, string[] partners)
         {
             var engagements = CalculateEngagements(expenditures, partners);
             var credits = CalculateCredits(expenditures, partners);
@@ -86,7 +86,7 @@ namespace Triangles.Code
         /// <summary>
         /// Возвращает дебиторские задолженности
         /// </summary>
-        private List<Engagement> CalculateEngagements(IEnumerable<Expenditure> expenditures, int[] partners)
+        private List<Engagement> CalculateEngagements(IEnumerable<Expenditure> expenditures, string[] partners)
         {
             var total = expenditures.Sum(x => x.Amount);
             var average = total/partners.Length;
@@ -111,7 +111,7 @@ namespace Triangles.Code
         /// <summary>
         /// Возвращает кредиторские задолженности
         /// </summary>
-        private List<Credit> CalculateCredits(IEnumerable<Expenditure> expenditures, int[] partners)
+		private List<Credit> CalculateCredits(IEnumerable<Expenditure> expenditures, string[] partners)
         {
             var total = expenditures.Sum(x => x.Amount);
             var average = total / partners.Length;

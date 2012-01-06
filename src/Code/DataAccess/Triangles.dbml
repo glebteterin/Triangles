@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="GlebT_Triangles" Class="TrianglesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=sql-active\sql2008;Initial Catalog=GlebT_Triangles;Integrated Security=True" SettingsObjectName="Triangles.Code.Properties.Settings" SettingsPropertyName="GlebT_TrianglesConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Expenditures" Member="Expenditures">
+    <Type Name="Expenditure">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Who" Type="System.String" DbType="NVarChar(400) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(10,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

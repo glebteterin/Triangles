@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Credit.cs" />
+    <Compile Include="DataAccess\ExpenditureRepository.cs" />
     <Compile Include="DataAccess\Triangles.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

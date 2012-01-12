@@ -3,25 +3,27 @@
 @model Triangles.Web.Models.ExpendituresModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Треугольники";
 }
 
-<h2>Затраты</h2>
+<h2>Треугольники</h2>
 
-<span>
+
 Этот сайт предназначен для автоматического расчета долгов при коллективных затратах, например когда вы компанией закупаетесь на новый год, а расходы делите между всеми.<br />
-Для начала, добавьте все расходы в таблицу. Для этого нажмите кнопку "Создать новую запись".<br />
-Участников, которые ничего не потратили, стоит внести тоже, иначе как мы узнаем, между кем распределять расходы? Просто оставьте ноль в поле Сумма.<br />
+Для начала, добавьте все расходы в таблицу, для этого нажмите кнопку "Создать новую запись".<br />
+Участников, которые ничего не потратили, стоит внести тоже, иначе как мы узнаем, между кем распределять расходы? Просто оставьте ноль в поле Сумма для таких товарищей.<br />
 После ввода всех затрат вы можете узнать кто кому и сколько должен двумя способами: с общим котлом и без него.<br />
-</span>
+<br />
 
-@Html.ActionLink("Новая сессия", "NewSession")
+@Html.ActionLink("Новая сессия", "NewSession")&nbsp;
 @{ if (Model.Expenditures.Any())
    {
-   	@Html.RouteLink("Расчет с общим котлом", "Calculation", new {controller = "Calculation", action = "CommonFund", sessionurl = Model.SessionUrl})
-   	@Html.RouteLink("Расчет с денежными потоками", "Calculation", new {controller = "Calculation", action = "Flows", sessionurl = Model.SessionUrl})
+   	@Html.RouteLink("Расчет с общим котлом", "Calculation", new { controller = "Calculation", action = "CommonFund", sessionurl = Model.SessionUrl })<text>&nbsp;</text>
+   	@Html.RouteLink("Расчет с денежными потоками", "Calculation", new { controller = "Calculation", action = "Flows", sessionurl = Model.SessionUrl })
    }
 }
+<br />
+<br />
 
 	@(Html.Telerik().Grid(Model.Expenditures)
     .Name("Grid")
@@ -51,3 +53,5 @@
     .Editable(editing => editing.Mode(GridEditMode.InForm))
 
 )
+<br />
+&copy;&nbsp;Gleb Teterin

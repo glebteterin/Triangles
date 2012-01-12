@@ -45,18 +45,19 @@ namespace MvcWeb.Controllers
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
-		public ActionResult Insert()
+		public ActionResult Insert(string sessionUrl)
 		{
 			var expenditure = new Models.Expenditure();
 			
 			if (TryUpdateModel(expenditure))
 			{
-				_repository.Insert(ExpenditureMapper.Map(expenditure));
+				var newExpenditure = ExpenditureMapper.Map(expenditure);
+				newExpenditure.Session = _sessionService.GetByUrl(sessionUrl);
+				_repository.Insert(newExpenditure);
 
 				return RedirectToAction("WorkSession");
 			}
 
-			var sessionUrl = (string) Session["sessionurl"];
 			var expenditures = _repository.BySessionUrl(sessionUrl)
 									.Select(ExpenditureMapper.Map).ToArray();
 

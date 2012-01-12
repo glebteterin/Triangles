@@ -1,0 +1,29 @@
+﻿@using MvcWeb.Models
+@model CalculationModel
+
+@{
+	ViewBag.Title = "title";
+}
+
+<h2>Расчет с денежными потоками</h2>
+
+<table>
+    <tr>
+        <td>Кто</td>
+        <td>Кому</td>
+        <td>Сумма</td>
+    </tr>
+
+    @{ foreach (var transfer in Model.Transfers)
+       {
+           
+           <tr>
+                <td>@transfer.From</td>
+                <td>@transfer.To</td>
+                <td>@transfer.Amount</td>
+           </tr>
+       }
+    }
+</table>
+
+@Html.ActionLink("Вернуться к затратам", "WorkSession", "Expenditures", new { sessionurl = Model.SessionUrl }, null)

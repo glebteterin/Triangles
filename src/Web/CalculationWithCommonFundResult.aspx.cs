@@ -5,8 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Triangles.Code;
+using Triangles.Code.BusinessLogic;
 using Triangles.Code.DataAccess;
-using Expenditure = Triangles.Code.Expenditure;
+using Expenditure = Triangles.Code.BusinessLogic.Expenditure;
 
 namespace Triangles.Web
 {

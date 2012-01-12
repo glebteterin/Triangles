@@ -19,7 +19,8 @@
                       AllowAutomaticUpdates="False"
                       EnableLinqExpressions="False"
                       OnUpdateCommand="rgExpenditures_UpdateCommand"
-                      OnInsertCommand="rgExpenditures_InsertCommand">
+                      OnInsertCommand="rgExpenditures_InsertCommand"
+                      OnDeleteCommand="rgExpenditures_DeleteCommand">
             <MasterTableView />
             <PagerStyle Mode="NextPrevAndNumeric" />
             <ClientSettings AllowDragToGroup="True" />

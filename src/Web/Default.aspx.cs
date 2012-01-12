@@ -48,6 +48,13 @@ namespace Triangles.Web
 			_repository.Save(expenditure);
 		}
 
+		protected void rgExpenditures_DeleteCommand(object sender, GridCommandEventArgs e)
+		{
+			var id = (int)((GridDataItem)e.Item).GetDataKeyValue("Id");
+
+			_repository.Delete(id);
+		}
+
 		protected void btnCalculate_Click(object sender, EventArgs e)
 		{
 			Response.Redirect("/CalculationResult.aspx");

@@ -1,0 +1,46 @@
+﻿@using Telerik.Web.Mvc.UI
+
+@model MvcWeb.Models.ExpendituresModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Затраты</h2>
+
+@Html.ActionLink("Новая сессия", "NewSession")
+@{ if (Model.Expenditures.Any())
+   {
+   	@Html.RouteLink("Расчет с общим котлом", "Calculation", new {controller = "Calculation", action = "CommonFund", sessionurl = Model.SessionUrl})
+   	@Html.RouteLink("Расчет с денежными потоками", "Calculation", new {controller = "Calculation", action = "Flows", sessionurl = Model.SessionUrl})
+   }
+}
+
+	@(Html.Telerik().Grid(Model.Expenditures)
+    .Name("Grid")
+    .Localizable("ru-RU")
+    .ToolBar(commands => commands.Insert())
+    .DataKeys(keys => keys.Add(c => c.Id))
+    
+    .DataBinding(dataBinding => dataBinding.Server()
+    .Select("WorkSession", "Expenditures")
+    .Insert("Insert", "Expenditures")
+    .Update("Save", "Expenditures")
+    .Delete("Delete", "Expenditures"))
+
+    .Columns(columns =>
+    {
+        columns.Bound(o => o.Who).Title("Кто").Width(200);
+        columns.Bound(o => o.Amount).Title("Сумма").Width(200);
+        columns.Bound(o => o.Description).Title("Примечание");
+        columns.Command(commands =>
+        {
+            commands.Edit().ButtonType(GridButtonType.Text);
+            commands.Delete().ButtonType(GridButtonType.Text);
+        }).Width(200);
+
+    })
+    .Sortable(sorting => sorting.Enabled(true))
+    .Editable(editing => editing.Mode(GridEditMode.InForm))
+
+)

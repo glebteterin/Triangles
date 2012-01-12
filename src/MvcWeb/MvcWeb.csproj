@@ -78,6 +78,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Office2007\editor.png" />
+    <Content Include="Content\Office2007\imagebrowser.png" />
+    <Content Include="Content\Office2007\loading.gif" />
+    <Content Include="Content\Office2007\slider-h.gif" />
+    <Content Include="Content\Office2007\slider-v.gif" />
+    <Content Include="Content\Office2007\sprite-vertical.png" />
+    <Content Include="Content\Office2007\sprite.png" />
+    <Content Include="Content\Office2007\treeview-line.png" />
+    <Content Include="Content\Office2007\treeview-nodes-rtl.png" />
+    <Content Include="Content\Office2007\treeview-nodes.png" />
     <Content Include="Content\telerik.common.css" />
     <Content Include="Content\telerik.default.css" />
     <Content Include="Content\telerik.office2007.css" />

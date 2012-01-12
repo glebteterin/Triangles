@@ -28,5 +28,11 @@ namespace Triangles.Code.Services
 
 			return newSessionUrl;
 		}
+
+		public Session GetByUrl(string uniqueUrl)
+		{
+			var session = _sessionRepository.GetByUniqueUrl(uniqueUrl);
+			return session;
+		}
 	}
 }

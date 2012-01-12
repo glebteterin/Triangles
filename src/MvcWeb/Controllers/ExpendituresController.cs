@@ -35,6 +35,9 @@ namespace MvcWeb.Controllers
 		{
 			Session["sessionurl"] = sessionUrl;
 
+			if (_sessionService.GetByUrl(sessionUrl) == null)
+				return NewSession();
+
 			var expenditures = _repository.BySessionUrl(sessionUrl)
 									.Select(ExpenditureMapper.Map).ToArray();
 

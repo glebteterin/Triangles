@@ -38,10 +38,7 @@ namespace Triangles.Web.Controllers
 			if (_sessionService.GetByUrl(sessionUrl) == null)
 				return NewSession();
 
-			var expenditures = _repository.BySessionUrl(sessionUrl)
-									.Select(ExpenditureMapper.Map).ToArray();
-
-			return View(new ExpendituresModel { Expenditures = expenditures, SessionUrl = sessionUrl });
+			return View(GetExpendituresModel(sessionUrl));
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
@@ -54,9 +51,11 @@ namespace Triangles.Web.Controllers
 				var newExpenditure = ExpenditureMapper.Map(expenditure);
 				newExpenditure.SessionId = _sessionService.GetByUrl(sessionUrl).Id;
 				_repository.Insert(newExpenditure);
+
+				return RedirectToAction("WorkSession", new { sessionUrl = sessionUrl });
 			}
 
-			return RedirectToAction("WorkSession", new { sessionUrl = sessionUrl });
+			return View("WorkSession", GetExpendituresModel(sessionUrl));
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
@@ -70,9 +69,10 @@ namespace Triangles.Web.Controllers
 			if (TryUpdateModel(expenditure))
 			{
 				_repository.Save(ExpenditureMapper.Map(expenditure));
+				return RedirectToAction("WorkSession", new { sessionUrl });
 			}
 
-			return RedirectToAction("WorkSession", new { sessionUrl = sessionUrl });
+			return View("WorkSession", GetExpendituresModel(sessionUrl));
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
@@ -80,8 +80,15 @@ namespace Triangles.Web.Controllers
 		{
 			_repository.Delete(id);
 
-			return RedirectToAction("WorkSession", new { sessionUrl = sessionUrl });
+			return RedirectToAction("WorkSession", new { sessionUrl });
 		}
 
+		private ExpendituresModel GetExpendituresModel(string sessionUrl)
+		{
+			var expenditures = _repository.BySessionUrl(sessionUrl)
+									.Select(ExpenditureMapper.Map).ToArray();
+
+			return  new ExpendituresModel { Expenditures = expenditures, SessionUrl = sessionUrl };
+		}
 	}
 }

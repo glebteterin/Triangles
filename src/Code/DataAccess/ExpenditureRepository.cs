@@ -47,6 +47,7 @@ namespace Triangles.Code.DataAccess
 			{
 				var expenditureToDelete = context.Expenditures.First(x => x.Id == id);
 				context.Expenditures.DeleteOnSubmit(expenditureToDelete);
+				context.SubmitChanges();
 			}
 		}
 
@@ -57,12 +58,5 @@ namespace Triangles.Code.DataAccess
 				return context.Expenditures.Where(x => x.Session.UniqueUrl == sessionUrl).ToArray();
 			}
 		}
-
-		public Expenditure[] All()
-		{
-			throw new System.NotImplementedException();
-		}
-
-		
 	}
 }

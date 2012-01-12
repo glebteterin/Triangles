@@ -54,22 +54,13 @@ namespace MvcWeb.Controllers
 				var newExpenditure = ExpenditureMapper.Map(expenditure);
 				newExpenditure.Session = _sessionService.GetByUrl(sessionUrl);
 				_repository.Insert(newExpenditure);
-
-				return RedirectToAction("WorkSession");
 			}
 
-			var expenditures = _repository.BySessionUrl(sessionUrl)
-									.Select(ExpenditureMapper.Map).ToArray();
-
-			return View("WorkSession", new ExpendituresModel
-											{
-												Expenditures = expenditures,
-												SessionUrl = sessionUrl
-											});
+			return RedirectToAction("WorkSession", new { sessionUrl = sessionUrl });
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
-		public ActionResult Save(int id)
+		public ActionResult Save(int id, string sessionUrl)
 		{
 			var expenditure = new Models.Expenditure
 			{
@@ -79,11 +70,17 @@ namespace MvcWeb.Controllers
 			if (TryUpdateModel(expenditure))
 			{
 				_repository.Save(ExpenditureMapper.Map(expenditure));
-				return RedirectToAction("WorkSession");
 			}
 
+			return RedirectToAction("WorkSession", new { sessionUrl = sessionUrl });
+		}
 
-			return RedirectToAction("WorkSession");
+		[AcceptVerbs(HttpVerbs.Post)]
+		public ActionResult Delete(int id, string sessionUrl)
+		{
+			_repository.Delete(id);
+
+			return RedirectToAction("WorkSession", new { sessionUrl = sessionUrl });
 		}
 
 	}

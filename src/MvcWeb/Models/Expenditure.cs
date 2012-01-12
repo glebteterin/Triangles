@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace MvcWeb.Models
+namespace Triangles.Web.Models
 {
 	public class Expenditure
 	{

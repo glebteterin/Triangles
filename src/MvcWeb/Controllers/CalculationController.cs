@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MvcWeb.Models;
 using Triangles.Code;
 using Triangles.Code.BusinessLogic;
 using Triangles.Code.DataAccess;
+using Triangles.Web.Models;
 using Expenditure = Triangles.Code.BusinessLogic.Expenditure;
 
-namespace MvcWeb.Controllers
+namespace Triangles.Web.Controllers
 {
 	public class CalculationController : Controller
 	{

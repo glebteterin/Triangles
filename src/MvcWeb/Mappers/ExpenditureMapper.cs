@@ -1,6 +1,6 @@
 ﻿using Triangles.Code.DataAccess;
 
-namespace MvcWeb.Mappers
+namespace Triangles.Web.Mappers
 {
 	public class ExpenditureMapper
 	{

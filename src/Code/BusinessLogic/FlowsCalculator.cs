@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Triangles.Code.BusinessLogic
@@ -61,17 +62,18 @@ namespace Triangles.Code.BusinessLogic
 			{
 				stop = true;
 
-				var creditToDelete = credits.FirstOrDefault(c => engagements.Any(e => e.Amount == c.Amount));
+				//вся эта возня с модулем нужна чтобы иметь возможность гасить 60 и 61 копейку
+				var creditToDelete = credits.FirstOrDefault(c => engagements.Any(e => Math.Abs(e.Amount - c.Amount) < 1));
 
 				if (creditToDelete != null)
 				{
-					var engagementToDelete = engagements.First(e => e.Amount == creditToDelete.Amount);
+					var engagementToDelete = engagements.First(e => Math.Abs(e.Amount - creditToDelete.Amount) < 1);
 
 					transfers.Add(new Transfer
 									  {
 										  From = engagementToDelete.Who,
 										  To = creditToDelete.Who,
-										  Amount = creditToDelete.Amount
+										  Amount = Math.Max(creditToDelete.Amount, engagementToDelete.Amount)
 									  });
 
 					engagements.Remove(engagementToDelete);
@@ -88,16 +90,17 @@ namespace Triangles.Code.BusinessLogic
 		/// </summary>
 		private List<Engagement> CalculateEngagements(IEnumerable<Expenditure> expenditures, string[] partners)
 		{
-			var total = expenditures.Sum(x => x.Amount);
-			var average = total/partners.Length;
+			decimal total;
+			decimal average;
+			CalculateAverageAndTotal(expenditures, partners, out total, out average);
 
 			var engagements = new List<Engagement>();
 
 			foreach (var partner in partners)
 			{
 				var partnerExpenditure = expenditures.FirstOrDefault(x => x.Who == partner);
-				
-				if (partnerExpenditure == null)
+
+				if (partnerExpenditure == null || partnerExpenditure.Amount == 0)
 					//партнер вообще ничего не тратил и должен выплатить среднее
 					engagements.Add(new Engagement { Amount = average, Who = partner });
 				else if (partnerExpenditure.Amount < average)
@@ -113,8 +116,9 @@ namespace Triangles.Code.BusinessLogic
 		/// </summary>
 		private List<Credit> CalculateCredits(IEnumerable<Expenditure> expenditures, string[] partners)
 		{
-			var total = expenditures.Sum(x => x.Amount);
-			var average = total / partners.Length;
+			decimal total;
+			decimal average;
+			CalculateAverageAndTotal(expenditures, partners, out total, out average);
 
 			var credits = new List<Credit>();
 
@@ -128,6 +132,12 @@ namespace Triangles.Code.BusinessLogic
 			}
 
 			return credits;
+		}
+
+		private static void CalculateAverageAndTotal(IEnumerable<Expenditure> expenditures, string[] partners, out decimal total, out decimal average)
+		{
+			total = expenditures.Sum(x => x.Amount);
+			average = decimal.Round(total / partners.Length, 2);
 		}
 	}
 }

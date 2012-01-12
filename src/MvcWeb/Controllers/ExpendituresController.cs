@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
-using MvcWeb.Mappers;
-using MvcWeb.Models;
 using Triangles.Code.DataAccess;
 using Triangles.Code.Services;
+using Triangles.Web.Mappers;
+using Triangles.Web.Models;
 
-namespace MvcWeb.Controllers
+namespace Triangles.Web.Controllers
 {
 	public class ExpendituresController : Controller
 	{
@@ -52,7 +52,7 @@ namespace MvcWeb.Controllers
 			if (TryUpdateModel(expenditure))
 			{
 				var newExpenditure = ExpenditureMapper.Map(expenditure);
-				newExpenditure.Session = _sessionService.GetByUrl(sessionUrl);
+				newExpenditure.SessionId = _sessionService.GetByUrl(sessionUrl).Id;
 				_repository.Insert(newExpenditure);
 			}
 

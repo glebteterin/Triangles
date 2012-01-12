@@ -1,4 +1,4 @@
-﻿namespace MvcWeb.Models
+﻿namespace Triangles.Web.Models
 {
 	public class ExpendituresModel
 	{

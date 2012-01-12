@@ -1,7 +1,7 @@
 ﻿using Triangles.Code;
 using Triangles.Code.BusinessLogic;
 
-namespace MvcWeb.Models
+namespace Triangles.Web.Models
 {
 	public class CalculationModel
 	{

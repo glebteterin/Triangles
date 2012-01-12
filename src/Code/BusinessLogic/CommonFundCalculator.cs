@@ -18,7 +18,7 @@ namespace Triangles.Code.BusinessLogic
 			var transfers = new List<Transfer>();
 
 			var total = expenditures.Sum(x => x.Amount);
-			var average = total / partners.Length;
+			var average = decimal.Round(total / partners.Length, 2);
 
 			foreach (var partner in partners)
 			{

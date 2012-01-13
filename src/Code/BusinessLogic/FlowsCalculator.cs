@@ -102,10 +102,10 @@ namespace Triangles.Code.BusinessLogic
 
 				if (partnerExpenditure == null || partnerExpenditure.Amount == 0)
 					//партнер вообще ничего не тратил и должен выплатить среднее
-					engagements.Add(new Engagement { Amount = average, Who = partner });
+					engagements.Add(new Engagement(partner, average));
 				else if (partnerExpenditure.Amount < average)
 					//партнер потратил меньше среднего и должен доплатить
-					engagements.Add(new Engagement { Amount = average - partnerExpenditure.Amount, Who = partner});
+					engagements.Add(new Engagement(partner, average - partnerExpenditure.Amount));
 			}
 
 			return engagements;
@@ -128,7 +128,7 @@ namespace Triangles.Code.BusinessLogic
 
 				if (partnerExpenditure != null && partnerExpenditure.Amount > average)
 					//партнер заплатил больше среднего
-					credits.Add(new Credit { Amount = partnerExpenditure.Amount - average, Who = partner});
+					credits.Add(new Credit(partner, partnerExpenditure.Amount - average));
 			}
 
 			return credits;

@@ -45,6 +45,10 @@
   <ItemGroup>
     <Compile Include="BusinessLogic\CommonFundCalculator.cs" />
     <Compile Include="BusinessLogic\Credit.cs" />
+    <Compile Include="BusinessLogic\Receipt\ParticipantStatus.cs" />
+    <Compile Include="BusinessLogic\Receipt\Receipt.cs" />
+    <Compile Include="BusinessLogic\Receipt\ReceiptRecord.cs" />
+    <Compile Include="BusinessLogic\Receipt\ReceiptsCalculator.cs" />
     <Compile Include="DataAccess\ExpenditureRepository.cs" />
     <Compile Include="DataAccess\SessionRepository.cs" />
     <Compile Include="DataAccess\Triangles.designer.cs">

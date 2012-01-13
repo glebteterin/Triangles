@@ -41,5 +41,16 @@ namespace Tests
 			transactions.First(x => (x.From == "Глеб" && x.To == "Данил")).Amount.Should().Be((decimal)146.75);
 			transactions.First(x => (x.From == "Санек" && x.To == "Данил")).Amount.Should().Be((decimal)6.5);
         }
+
+		[Test]
+		public void AbsoluteValueTest()
+		{
+			var albina = new Expenditure { Amount = 100, Who = "Глеб" };
+			var danil = new Expenditure { Amount = 0, Who = "Альбина" };
+			var gleb = new Expenditure { Amount = 0, Who = "Данил" };
+
+			var calculator = new FlowsCalculator();
+			var transactions = calculator.Calculate(new[] { albina, gleb, danil }, new[] { "Глеб", "Альбина", "Данил" });
+		}
     }
 }

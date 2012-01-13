@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web.Mvc;
 using Triangles.Code.DataAccess;
 using Triangles.Code.Services;
@@ -45,14 +46,14 @@ namespace Triangles.Web.Controllers
 		public ActionResult Insert(string sessionUrl)
 		{
 			var expenditure = new Models.Expenditure();
-			
-			if (TryUpdateModel(expenditure))
+
+			if (TryUpdateModel(expenditure) && ValidateParticipantDuplicating(expenditure, sessionUrl, ModelState))
 			{
 				var newExpenditure = ExpenditureMapper.Map(expenditure);
 				newExpenditure.SessionId = _sessionService.GetByUrl(sessionUrl).Id;
 				_repository.Insert(newExpenditure);
 
-				return RedirectToAction("WorkSession", new { sessionUrl = sessionUrl });
+				return RedirectToAction("WorkSession", new { sessionUrl });
 			}
 
 			return View("WorkSession", GetExpendituresModel(sessionUrl));
@@ -61,12 +62,9 @@ namespace Triangles.Web.Controllers
 		[AcceptVerbs(HttpVerbs.Post)]
 		public ActionResult Save(int id, string sessionUrl)
 		{
-			var expenditure = new Models.Expenditure
-			{
-				Id = id
-			};
+			var expenditure = new Models.Expenditure { Id = id };
 
-			if (TryUpdateModel(expenditure))
+			if (TryUpdateModel(expenditure) && ValidateParticipantDuplicating(expenditure, sessionUrl, ModelState))
 			{
 				_repository.Save(ExpenditureMapper.Map(expenditure));
 				return RedirectToAction("WorkSession", new { sessionUrl });
@@ -89,6 +87,17 @@ namespace Triangles.Web.Controllers
 									.Select(ExpenditureMapper.Map).ToArray();
 
 			return  new ExpendituresModel { Expenditures = expenditures, SessionUrl = sessionUrl };
+		}
+
+		private bool ValidateParticipantDuplicating(Models.Expenditure expenditure, string sessionUrl, ModelStateDictionary modelState)
+		{
+			var existedExpenditures = _sessionService.GetByUrl(sessionUrl).Expenditures;
+			if (existedExpenditures.Any(x=>x.Who.Trim().ToLower() == expenditure.Who.Trim().ToLower()))
+			{
+				modelState.AddModelError("Who","Такой участник уже существует");
+				return false;
+			}
+			return true;
 		}
 	}
 }

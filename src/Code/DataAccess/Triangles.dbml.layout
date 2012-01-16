@@ -2,23 +2,49 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Triangles">
   <DataContextMoniker Name="/TrianglesDataContext" />
   <nestedChildShapes>
-    <classShape Id="73516ffc-7584-4a4b-8c6a-697fff7fd071" absoluteBounds="0.75, 1.25, 2, 1.1939925130208338">
-      <DataClassMoniker Name="/TrianglesDataContext/Session" />
-      <nestedChildShapes>
-        <elementListCompartment Id="b43be350-b156-470f-ad45-6f7137de5dbf" absoluteBounds="0.765, 1.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="1cc0705a-ba71-478c-b7c7-2de5c7fb12e6" absoluteBounds="3.5, 0.875, 2, 1.7708968098958333">
+    <classShape Id="34c5d2e9-482c-44d9-bbf8-6e96a483dd71" absoluteBounds="3.5, 3.5, 2, 1.7708968098958327">
       <DataClassMoniker Name="/TrianglesDataContext/Expenditure" />
       <nestedChildShapes>
-        <elementListCompartment Id="0fd34130-8719-48a0-beda-4805865cd8ad" absoluteBounds="3.515, 1.335, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="5be1adca-260f-4a66-95a4-ce7986ad8e17" absoluteBounds="3.515, 3.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.75 : 1.84699625651042); (3.5 : 1.84699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <classShape Id="da625114-d640-43d4-a744-d52f54eb9f36" absoluteBounds="0.75, 2.625, 2, 1.1939925130208335">
+      <DataClassMoniker Name="/TrianglesDataContext/Session" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4310d8d0-5d7b-4bd3-8982-6c08a995e790" absoluteBounds="0.765, 3.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d2985ba7-eca0-4418-ac4c-e2a18fd17295" absoluteBounds="6.25, 1, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/TrianglesDataContext/ReceiptRecord" />
+      <nestedChildShapes>
+        <elementListCompartment Id="957073ee-1890-4052-92bd-02863ca58815" absoluteBounds="6.265, 1.46, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3507f773-9e45-4d53-9174-9b2cca340fb5" absoluteBounds="3.5, 1.125, 2, 1.5785953776041668">
+      <DataClassMoniker Name="/TrianglesDataContext/Receipt" />
+      <nestedChildShapes>
+        <elementListCompartment Id="de9f4e22-2d4d-4b63-844d-530c73820f85" absoluteBounds="3.515, 1.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 3.65949625651042); (3.5 : 3.65949625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/TrianglesDataContext/Session/Session_Expenditure" />
       <nodes>
-        <classShapeMoniker Id="73516ffc-7584-4a4b-8c6a-697fff7fd071" />
-        <classShapeMoniker Id="1cc0705a-ba71-478c-b7c7-2de5c7fb12e6" />
+        <classShapeMoniker Id="da625114-d640-43d4-a744-d52f54eb9f36" />
+        <classShapeMoniker Id="34c5d2e9-482c-44d9-bbf8-6e96a483dd71" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 1.91429768880208); (6.25 : 1.91429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TrianglesDataContext/Receipt/Receipt_ReceiptRecord" />
+      <nodes>
+        <classShapeMoniker Id="3507f773-9e45-4d53-9174-9b2cca340fb5" />
+        <classShapeMoniker Id="d2985ba7-eca0-4418-ac4c-e2a18fd17295" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 2.625); (1.75 : 1.8749995); (3.5 : 1.8749995)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TrianglesDataContext/Session/Session_Receipt" />
+      <nodes>
+        <classShapeMoniker Id="da625114-d640-43d4-a744-d52f54eb9f36" />
+        <classShapeMoniker Id="3507f773-9e45-4d53-9174-9b2cca340fb5" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

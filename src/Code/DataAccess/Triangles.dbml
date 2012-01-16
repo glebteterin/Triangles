@@ -1,12 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="GlebT_Triangles" Class="TrianglesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=sql-active\sql2008;Initial Catalog=GlebT_Triangles;Persist Security Info=True;User ID=csldatareader" SettingsObjectName="Triangles.Code.Properties.Settings" SettingsPropertyName="GlebT_TrianglesConnectionString1" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.Sessions" Member="Sessions">
-    <Type Name="Session">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="UniqueUrl" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
-      <Association Name="Session_Expenditure" Member="Expenditures" ThisKey="Id" OtherKey="SessionId" Type="Expenditure" />
-    </Type>
-  </Table>
+  <Connection Mode="AppSettings" ConnectionString="Data Source=sql-active\sql2008;Initial Catalog=GlebT_Triangles;Integrated Security=True" SettingsObjectName="Triangles.Code.Properties.Settings" SettingsPropertyName="GlebT_TrianglesConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Expenditures" Member="Expenditures">
     <Type Name="Expenditure">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -15,6 +8,34 @@
       <Column Name="Amount" Type="System.Decimal" DbType="Decimal(10,2) NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
       <Association Name="Session_Expenditure" Member="Session" ThisKey="SessionId" OtherKey="Id" Type="Session" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sessions" Member="Sessions">
+    <Type Name="Session">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UniqueUrl" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="Session_Expenditure" Member="Expenditures" ThisKey="Id" OtherKey="SessionId" Type="Expenditure" />
+      <Association Name="Session_Receipt" Member="Receipts" ThisKey="Id" OtherKey="SessionId" Type="Receipt" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ReceiptRecords" Member="ReceiptRecords">
+    <Type Name="ReceiptRecord">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ReceiptId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(10,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Participant" Type="System.String" DbType="NVarChar(400) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(400) NOT NULL" CanBeNull="false" />
+      <Association Name="Receipt_ReceiptRecord" Member="Receipt" ThisKey="ReceiptId" OtherKey="Id" Type="Receipt" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Receipts" Member="Receipts">
+    <Type Name="Receipt">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SessionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Payer" Type="System.String" DbType="NVarChar(400) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Association Name="Receipt_ReceiptRecord" Member="ReceiptRecords" ThisKey="Id" OtherKey="ReceiptId" Type="ReceiptRecord" />
+      <Association Name="Session_Receipt" Member="Session" ThisKey="SessionId" OtherKey="Id" Type="Session" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
 </Database>

@@ -30,16 +30,22 @@ namespace Triangles.Code.DataAccess
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertSession(Session instance);
-    partial void UpdateSession(Session instance);
-    partial void DeleteSession(Session instance);
     partial void InsertExpenditure(Expenditure instance);
     partial void UpdateExpenditure(Expenditure instance);
     partial void DeleteExpenditure(Expenditure instance);
+    partial void InsertSession(Session instance);
+    partial void UpdateSession(Session instance);
+    partial void DeleteSession(Session instance);
+    partial void InsertReceiptRecord(ReceiptRecord instance);
+    partial void UpdateReceiptRecord(ReceiptRecord instance);
+    partial void DeleteReceiptRecord(ReceiptRecord instance);
+    partial void InsertReceipt(Receipt instance);
+    partial void UpdateReceipt(Receipt instance);
+    partial void DeleteReceipt(Receipt instance);
     #endregion
 		
 		public TrianglesDataContext() : 
-				base(global::Triangles.Code.Properties.Settings.Default.GlebT_TrianglesConnectionString1, mappingSource)
+				base(global::Triangles.Code.Properties.Settings.Default.GlebT_TrianglesConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -68,6 +74,14 @@ namespace Triangles.Code.DataAccess
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<Expenditure> Expenditures
+		{
+			get
+			{
+				return this.GetTable<Expenditure>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Session> Sessions
 		{
 			get
@@ -76,126 +90,20 @@ namespace Triangles.Code.DataAccess
 			}
 		}
 		
-		public System.Data.Linq.Table<Expenditure> Expenditures
+		public System.Data.Linq.Table<ReceiptRecord> ReceiptRecords
 		{
 			get
 			{
-				return this.GetTable<Expenditure>();
+				return this.GetTable<ReceiptRecord>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Sessions")]
-	public partial class Session : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _UniqueUrl;
-		
-		private EntitySet<Expenditure> _Expenditures;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnUniqueUrlChanging(string value);
-    partial void OnUniqueUrlChanged();
-    #endregion
-		
-		public Session()
-		{
-			this._Expenditures = new EntitySet<Expenditure>(new Action<Expenditure>(this.attach_Expenditures), new Action<Expenditure>(this.detach_Expenditures));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
+		public System.Data.Linq.Table<Receipt> Receipts
 		{
 			get
 			{
-				return this._Id;
+				return this.GetTable<Receipt>();
 			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UniqueUrl", DbType="NVarChar(10) NOT NULL", CanBeNull=false)]
-		public string UniqueUrl
-		{
-			get
-			{
-				return this._UniqueUrl;
-			}
-			set
-			{
-				if ((this._UniqueUrl != value))
-				{
-					this.OnUniqueUrlChanging(value);
-					this.SendPropertyChanging();
-					this._UniqueUrl = value;
-					this.SendPropertyChanged("UniqueUrl");
-					this.OnUniqueUrlChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Session_Expenditure", Storage="_Expenditures", ThisKey="Id", OtherKey="SessionId")]
-		public EntitySet<Expenditure> Expenditures
-		{
-			get
-			{
-				return this._Expenditures;
-			}
-			set
-			{
-				this._Expenditures.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Expenditures(Expenditure entity)
-		{
-			this.SendPropertyChanging();
-			entity.Session = this;
-		}
-		
-		private void detach_Expenditures(Expenditure entity)
-		{
-			this.SendPropertyChanging();
-			entity.Session = null;
 		}
 	}
 	
@@ -395,6 +303,550 @@ namespace Triangles.Code.DataAccess
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Sessions")]
+	public partial class Session : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _UniqueUrl;
+		
+		private EntitySet<Expenditure> _Expenditures;
+		
+		private EntitySet<Receipt> _Receipts;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnUniqueUrlChanging(string value);
+    partial void OnUniqueUrlChanged();
+    #endregion
+		
+		public Session()
+		{
+			this._Expenditures = new EntitySet<Expenditure>(new Action<Expenditure>(this.attach_Expenditures), new Action<Expenditure>(this.detach_Expenditures));
+			this._Receipts = new EntitySet<Receipt>(new Action<Receipt>(this.attach_Receipts), new Action<Receipt>(this.detach_Receipts));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UniqueUrl", DbType="NVarChar(10) NOT NULL", CanBeNull=false)]
+		public string UniqueUrl
+		{
+			get
+			{
+				return this._UniqueUrl;
+			}
+			set
+			{
+				if ((this._UniqueUrl != value))
+				{
+					this.OnUniqueUrlChanging(value);
+					this.SendPropertyChanging();
+					this._UniqueUrl = value;
+					this.SendPropertyChanged("UniqueUrl");
+					this.OnUniqueUrlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Session_Expenditure", Storage="_Expenditures", ThisKey="Id", OtherKey="SessionId")]
+		public EntitySet<Expenditure> Expenditures
+		{
+			get
+			{
+				return this._Expenditures;
+			}
+			set
+			{
+				this._Expenditures.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Session_Receipt", Storage="_Receipts", ThisKey="Id", OtherKey="SessionId")]
+		public EntitySet<Receipt> Receipts
+		{
+			get
+			{
+				return this._Receipts;
+			}
+			set
+			{
+				this._Receipts.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Expenditures(Expenditure entity)
+		{
+			this.SendPropertyChanging();
+			entity.Session = this;
+		}
+		
+		private void detach_Expenditures(Expenditure entity)
+		{
+			this.SendPropertyChanging();
+			entity.Session = null;
+		}
+		
+		private void attach_Receipts(Receipt entity)
+		{
+			this.SendPropertyChanging();
+			entity.Session = this;
+		}
+		
+		private void detach_Receipts(Receipt entity)
+		{
+			this.SendPropertyChanging();
+			entity.Session = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ReceiptRecords")]
+	public partial class ReceiptRecord : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _ReceiptId;
+		
+		private decimal _Amount;
+		
+		private string _Participant;
+		
+		private string _Description;
+		
+		private EntityRef<Receipt> _Receipt;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnReceiptIdChanging(int value);
+    partial void OnReceiptIdChanged();
+    partial void OnAmountChanging(decimal value);
+    partial void OnAmountChanged();
+    partial void OnParticipantChanging(string value);
+    partial void OnParticipantChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    #endregion
+		
+		public ReceiptRecord()
+		{
+			this._Receipt = default(EntityRef<Receipt>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceiptId", DbType="Int NOT NULL")]
+		public int ReceiptId
+		{
+			get
+			{
+				return this._ReceiptId;
+			}
+			set
+			{
+				if ((this._ReceiptId != value))
+				{
+					if (this._Receipt.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnReceiptIdChanging(value);
+					this.SendPropertyChanging();
+					this._ReceiptId = value;
+					this.SendPropertyChanged("ReceiptId");
+					this.OnReceiptIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(10,2) NOT NULL")]
+		public decimal Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this.OnAmountChanging(value);
+					this.SendPropertyChanging();
+					this._Amount = value;
+					this.SendPropertyChanged("Amount");
+					this.OnAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Participant", DbType="NVarChar(400) NOT NULL", CanBeNull=false)]
+		public string Participant
+		{
+			get
+			{
+				return this._Participant;
+			}
+			set
+			{
+				if ((this._Participant != value))
+				{
+					this.OnParticipantChanging(value);
+					this.SendPropertyChanging();
+					this._Participant = value;
+					this.SendPropertyChanged("Participant");
+					this.OnParticipantChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(400) NOT NULL", CanBeNull=false)]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Receipt_ReceiptRecord", Storage="_Receipt", ThisKey="ReceiptId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public Receipt Receipt
+		{
+			get
+			{
+				return this._Receipt.Entity;
+			}
+			set
+			{
+				Receipt previousValue = this._Receipt.Entity;
+				if (((previousValue != value) 
+							|| (this._Receipt.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Receipt.Entity = null;
+						previousValue.ReceiptRecords.Remove(this);
+					}
+					this._Receipt.Entity = value;
+					if ((value != null))
+					{
+						value.ReceiptRecords.Add(this);
+						this._ReceiptId = value.Id;
+					}
+					else
+					{
+						this._ReceiptId = default(int);
+					}
+					this.SendPropertyChanged("Receipt");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Receipts")]
+	public partial class Receipt : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _SessionId;
+		
+		private string _Payer;
+		
+		private string _Description;
+		
+		private EntitySet<ReceiptRecord> _ReceiptRecords;
+		
+		private EntityRef<Session> _Session;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnSessionIdChanging(int value);
+    partial void OnSessionIdChanged();
+    partial void OnPayerChanging(string value);
+    partial void OnPayerChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    #endregion
+		
+		public Receipt()
+		{
+			this._ReceiptRecords = new EntitySet<ReceiptRecord>(new Action<ReceiptRecord>(this.attach_ReceiptRecords), new Action<ReceiptRecord>(this.detach_ReceiptRecords));
+			this._Session = default(EntityRef<Session>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SessionId", DbType="Int NOT NULL")]
+		public int SessionId
+		{
+			get
+			{
+				return this._SessionId;
+			}
+			set
+			{
+				if ((this._SessionId != value))
+				{
+					if (this._Session.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSessionIdChanging(value);
+					this.SendPropertyChanging();
+					this._SessionId = value;
+					this.SendPropertyChanged("SessionId");
+					this.OnSessionIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Payer", DbType="NVarChar(400) NOT NULL", CanBeNull=false)]
+		public string Payer
+		{
+			get
+			{
+				return this._Payer;
+			}
+			set
+			{
+				if ((this._Payer != value))
+				{
+					this.OnPayerChanging(value);
+					this.SendPropertyChanging();
+					this._Payer = value;
+					this.SendPropertyChanged("Payer");
+					this.OnPayerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NChar(10)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Receipt_ReceiptRecord", Storage="_ReceiptRecords", ThisKey="Id", OtherKey="ReceiptId")]
+		public EntitySet<ReceiptRecord> ReceiptRecords
+		{
+			get
+			{
+				return this._ReceiptRecords;
+			}
+			set
+			{
+				this._ReceiptRecords.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Session_Receipt", Storage="_Session", ThisKey="SessionId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public Session Session
+		{
+			get
+			{
+				return this._Session.Entity;
+			}
+			set
+			{
+				Session previousValue = this._Session.Entity;
+				if (((previousValue != value) 
+							|| (this._Session.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Session.Entity = null;
+						previousValue.Receipts.Remove(this);
+					}
+					this._Session.Entity = value;
+					if ((value != null))
+					{
+						value.Receipts.Add(this);
+						this._SessionId = value.Id;
+					}
+					else
+					{
+						this._SessionId = default(int);
+					}
+					this.SendPropertyChanged("Session");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_ReceiptRecords(ReceiptRecord entity)
+		{
+			this.SendPropertyChanging();
+			entity.Receipt = this;
+		}
+		
+		private void detach_ReceiptRecords(ReceiptRecord entity)
+		{
+			this.SendPropertyChanging();
+			entity.Receipt = null;
 		}
 	}
 }

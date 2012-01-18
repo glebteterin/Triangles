@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Triangles.Code.Services;
 
 namespace Triangles.Web.Models
 {
 	[Serializable]
-	public class Expenditure
+	public class Receipt
 	{
 		[ScaffoldColumn(false)]
 		public int Id { get; set; }
+
 		[Required]
-		[DisplayName("Кто")]
-		public string Who { get; set; }
-		[Required]
-		[DisplayName("Сумма")]
-		public decimal Amount { get; set; }
+		[DisplayName("Кто платил")]
+		public string Payer { get; set; }
+
 		[DisplayName("Описание")]
 		public string Description { get; set; }
 	}

@@ -1,0 +1,37 @@
+﻿@using Telerik.Web.Mvc.UI
+@using Triangles.Web.Models
+@model ReceiptsModel
+
+@{
+	ViewBag.Title = "Чеки";
+}
+
+<h2>Чеки</h2>
+
+@(Html.Telerik().Grid<Receipt>(Model.Receipts)
+        .Name("ReceiptsGrid")
+    .Localizable("ru-RU")
+    .ToolBar(commands => commands.Insert())
+    .DataKeys(keys => keys.Add(c => c.Id))
+
+    .DataBinding(dataBinding => dataBinding.Ajax()
+            .Select("AjaxSelect", "Receipts")
+            .Insert("AjaxInsert", "Receipts")
+            .Update("AjaxSave", "Receipts")
+            .Delete("AjaxDelete", "Receipts"))
+
+    .Columns(columns =>
+    {
+        columns.Bound(o => o.Payer).Title("Кто платил").Width(200);
+        columns.Bound(o => o.Description).Title("Примечание");
+        columns.Command(commands =>
+        {
+            commands.Edit().ButtonType(GridButtonType.Text);
+            commands.Delete().ButtonType(GridButtonType.Text);
+        }).Width(200);
+
+    })
+    .Sortable(sorting => sorting.Enabled(true))
+    .Editable(editing => editing.Mode(GridEditMode.InForm))
+)
+

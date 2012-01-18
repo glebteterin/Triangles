@@ -18,18 +18,16 @@ namespace Triangles.Web
 		{
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-			
-
 			routes.MapRoute(
-				"Index",
+				"Home",
 				"",
-				new { controller = "Expenditures", action = "Index"}
+				new { controller = "Home", action = "Index", sessionUrl = UrlParameter.Optional }
 			);
 
 			routes.MapRoute(
 				"Session",
 				"{sessionUrl}",
-				new { controller = "Expenditures", action = "WorkSession", sessionUrl = UrlParameter.Optional }
+				new { controller = "Home", action = "WorkSession", sessionUrl = UrlParameter.Optional }
 			);
 
 			routes.MapRoute(
@@ -40,8 +38,8 @@ namespace Triangles.Web
 
 			routes.MapRoute(
 				"Default",
-				"{controller}/{action}/{id}",
-				new { controller = "Expenditures", action = "Index", id = UrlParameter.Optional }
+				"{controller}/{action}/{sessionUrl}",
+				new { controller = "Home", action = "Index", sessionUrl = UrlParameter.Optional }
 			);
 
 		}
@@ -49,6 +47,8 @@ namespace Triangles.Web
 		protected void Application_Start()
 		{
 			AreaRegistration.RegisterAllAreas();
+
+			LocalBootstrapper.InitializeAutoMapper();
 
 			RegisterGlobalFilters(GlobalFilters.Filters);
 			RegisterRoutes(RouteTable.Routes);

@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.0.0\lib\net40-client\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
     </Reference>
@@ -68,13 +71,18 @@
   <ItemGroup>
     <Compile Include="Controllers\CalculationController.cs" />
     <Compile Include="Controllers\ExpendituresController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReceiptsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LocalBootstrapper.cs" />
     <Compile Include="Mappers\ExpenditureMapper.cs" />
     <Compile Include="Models\CalculationModel.cs" />
     <Compile Include="Models\Expenditure.cs" />
     <Compile Include="Models\ExpendituresModel.cs" />
+    <Compile Include="Models\Receipt.cs" />
+    <Compile Include="Models\ReceiptsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -167,13 +175,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Expenditures\WorkSession.cshtml" />
+    <Content Include="Views\Expenditures\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Calculation\CommonFund.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Calculation\Flows.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\WorkSession.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Receipts\Show.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

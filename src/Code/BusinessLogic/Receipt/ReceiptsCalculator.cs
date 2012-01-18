@@ -28,7 +28,7 @@ namespace Triangles.Code.BusinessLogic.Receipt
 						statuses.Add(new ParticipantStatus { Participant = receiptRecord.Participant });
 
 					var status = statuses.Single(x => x.Participant == receiptRecord.Participant);
-					if (receipt.WhoPaid == status.Participant)
+					if (receipt.Payer == status.Participant)
 					{
 						//если участник оплачивал чек сам, то он потратил всю сумму по чеку
 						status.Real += receipt.Records.Sum(x => x.Amount);

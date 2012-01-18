@@ -6,6 +6,6 @@
 	public class Receipt
 	{
 		public ReceiptRecord[] Records { get; set; }
-		public string WhoPaid { get; set; }
+		public string Payer { get; set; }
 	}
 }

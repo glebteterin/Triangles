@@ -21,6 +21,7 @@ namespace Triangles.Code.DataAccess
 				var options = new DataLoadOptions();
 				options.LoadWith<Session>(s => s.Expenditures);
 				options.LoadWith<Session>(s => s.Receipts);
+				options.LoadWith<Receipt>(r => r.ReceiptRecords);
 				context.LoadOptions = options;
 
 				var session = context.Sessions.FirstOrDefault(x => x.UniqueUrl == sessionUrl);

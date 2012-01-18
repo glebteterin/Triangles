@@ -1,12 +1,14 @@
 ﻿@using Telerik.Web.Mvc.UI
 @using Triangles.Web.Models
-@model ReceiptsModel
+@model string
 
 @{
 	ViewBag.Title = "Чеки";
 }
 
 <h2>Чеки</h2>
+
+@Html.RouteLink("Расчет по чекам", "Calculation", new { controller = "Calculation", action = "Receipts", sessionurl = Model })
 
 @(Html.Telerik().Grid<Receipt>()
         .Name("ReceiptsGrid")

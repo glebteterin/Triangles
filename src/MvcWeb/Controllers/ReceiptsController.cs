@@ -20,7 +20,7 @@ namespace Triangles.Web.Controllers
 
 		public ActionResult Show(string sessionUrl)
 		{
-			return View(new ReceiptsModel {Receipts = _sessionService.GetByUrl(sessionUrl).Receipts.Select(x=>Mapper.Map<Receipt>(x)).ToArray()});
+			return View((object)sessionUrl);
 		}
 
 		[GridAction]

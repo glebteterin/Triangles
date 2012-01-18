@@ -33,7 +33,7 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="SessionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Payer" Type="System.String" DbType="NVarChar(400) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
       <Association Name="Receipt_ReceiptRecord" Member="ReceiptRecords" ThisKey="Id" OtherKey="ReceiptId" Type="ReceiptRecord" />
       <Association Name="Session_Receipt" Member="Session" ThisKey="SessionId" OtherKey="Id" Type="Session" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>

@@ -1,9 +1,22 @@
-﻿using System.Linq;
+﻿using System.Data.Linq;
+using System.Linq;
 
 namespace Triangles.Code.DataAccess
 {
 	public class ReceiptRepository
 	{
+		public Receipt ById(int receiptId)
+		{
+			using (var context = new TrianglesDataContext())
+			{
+				var options = new DataLoadOptions();
+				options.LoadWith<Receipt>(r => r.ReceiptRecords);
+				context.LoadOptions = options;
+
+				return context.Receipts.First(x => x.Id == receiptId);
+			}
+		}
+
 		public void Insert(Receipt receipt)
 		{
 			using (var context = new TrianglesDataContext())

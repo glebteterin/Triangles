@@ -12,6 +12,9 @@ namespace Triangles.Web
 			;
 
 			Mapper.CreateMap<Code.DataAccess.Receipt,Web.Models.Receipt>();
+
+			Mapper.CreateMap<Code.DataAccess.ReceiptRecord,Web.Models.ReceiptRecord>();
+			Mapper.CreateMap<Web.Models.ReceiptRecord, Code.DataAccess.ReceiptRecord>();
 		}
 	}
 }

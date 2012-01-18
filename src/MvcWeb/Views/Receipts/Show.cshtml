@@ -8,7 +8,7 @@
 
 <h2>Чеки</h2>
 
-@(Html.Telerik().Grid<Receipt>(Model.Receipts)
+@(Html.Telerik().Grid<Receipt>()
         .Name("ReceiptsGrid")
     .Localizable("ru-RU")
     .ToolBar(commands => commands.Insert())
@@ -19,7 +19,35 @@
             .Insert("AjaxInsert", "Receipts")
             .Update("AjaxSave", "Receipts")
             .Delete("AjaxDelete", "Receipts"))
+    
+    .DetailView(details => details.ClientTemplate(
+        Html.Telerik().Grid<ReceiptRecord>()
+        .Name("ReceiptRecords_<#= Id #>")
+        .Localizable("ru-RU")
+        .ToolBar(commands => commands.Insert())
+        .DataKeys(keys => keys.Add(c => c.Id))
+        .Columns(columns =>
+        {
+            columns.Bound(r => r.Participant).Width(200);
+            columns.Bound(r => r.Amount).Width(140);
+            columns.Bound(r => r.Description).Width(300);
+            columns.Command(commands =>
+            {
+                commands.Edit().ButtonType(GridButtonType.Text);
+                commands.Delete().ButtonType(GridButtonType.Text);
+            }).Width(200);
+        })
+        .ClientEvents(events => events.OnRowDataBound("receiptRecords_onRowDataBound"))
+        .DataBinding(dataBinding => dataBinding.Ajax()
+            .Select("AjaxSelect", "ReceiptRecords", new { receiptId = "<#= Id #>" })
+            .Insert("AjaxInsert", "ReceiptRecords", new { receiptId = "<#= Id #>" })
+            .Update("AjaxSave", "ReceiptRecords", new { receiptId = "<#= Id #>" })
+            .Delete("AjaxDelete", "ReceiptRecords", new { receiptId = "<#= Id #>" }))
+         .Editable(editing => editing.Mode(GridEditMode.InForm))
+        .ToHtmlString()
+        ))
 
+    .ClientEvents(events => events.OnRowDataBound("receipts_onRowDataBound"))
     .Columns(columns =>
     {
         columns.Bound(o => o.Payer).Title("Кто платил").Width(200);
@@ -35,3 +63,20 @@
     .Editable(editing => editing.Mode(GridEditMode.InForm))
 )
 
+<script type="text/javascript">
+    function expandFirstRow(grid, row) {
+        if (grid.$rows().index(row) == 0) {
+            grid.expandRow(row);
+        }
+    }
+
+    function receipts_onRowDataBound(e) {
+        var grid = $(this).data('tGrid');
+        expandFirstRow(grid, e.row);
+    }
+
+    function receiptRecords_onRowDataBound(e) {
+        var grid = $(this).data('tGrid');
+        expandFirstRow(grid, e.row);
+    }
+</script>

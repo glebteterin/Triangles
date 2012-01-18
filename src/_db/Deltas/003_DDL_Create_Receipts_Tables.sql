@@ -7,7 +7,7 @@ CREATE TABLE [dbo].[Receipts](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[SessionId] [int] NOT NULL,
 	[Payer] [nvarchar](400) NOT NULL,
-	[Description] [nchar](10) NULL,
+	[Description] [nvarchar](400) NULL,
  CONSTRAINT [PK_Receipts] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

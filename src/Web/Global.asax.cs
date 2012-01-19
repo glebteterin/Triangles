@@ -11,12 +11,19 @@ namespace Triangles.Web
 	{
 		public static void RegisterGlobalFilters(GlobalFilterCollection filters)
 		{
-			filters.Add(new HandleErrorAttribute());
+			//я использую customErrors
+//			filters.Add(new HandleErrorAttribute());
 		}
 
 		public static void RegisterRoutes(RouteCollection routes)
 		{
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+			routes.MapRoute(
+				"Error",
+				"Error/{errorCode}",
+				new { controller = "ErrorPage", action = "Error", errorCode = UrlParameter.Optional }
+			);
 
 			routes.MapRoute(
 				"Home",

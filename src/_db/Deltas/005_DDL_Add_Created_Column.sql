@@ -1,0 +1,1 @@
+ALTER TABLE Sessions ADD Created datetime

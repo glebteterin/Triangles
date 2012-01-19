@@ -1,4 +1,5 @@
-﻿using Triangles.Code.DataAccess;
+﻿using System;
+using Triangles.Code.DataAccess;
 using Triangles.Code.Utils;
 
 namespace Triangles.Code.Services
@@ -23,7 +24,7 @@ namespace Triangles.Code.Services
 				isNotUniqueSessionUrl = session != null;
 			} while (isNotUniqueSessionUrl);
 
-			var newSession = new Session {UniqueUrl = newSessionUrl};
+			var newSession = new Session {UniqueUrl = newSessionUrl, Created = DateTime.Now};
 			_sessionRepository.Save(newSession);
 
 			return newSessionUrl;

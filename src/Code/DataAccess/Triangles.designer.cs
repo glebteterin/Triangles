@@ -33,15 +33,15 @@ namespace Triangles.Code.DataAccess
     partial void InsertExpenditure(Expenditure instance);
     partial void UpdateExpenditure(Expenditure instance);
     partial void DeleteExpenditure(Expenditure instance);
-    partial void InsertSession(Session instance);
-    partial void UpdateSession(Session instance);
-    partial void DeleteSession(Session instance);
     partial void InsertReceiptRecord(ReceiptRecord instance);
     partial void UpdateReceiptRecord(ReceiptRecord instance);
     partial void DeleteReceiptRecord(ReceiptRecord instance);
     partial void InsertReceipt(Receipt instance);
     partial void UpdateReceipt(Receipt instance);
     partial void DeleteReceipt(Receipt instance);
+    partial void InsertSession(Session instance);
+    partial void UpdateSession(Session instance);
+    partial void DeleteSession(Session instance);
     #endregion
 		
 		public TrianglesDataContext() : 
@@ -82,14 +82,6 @@ namespace Triangles.Code.DataAccess
 			}
 		}
 		
-		public System.Data.Linq.Table<Session> Sessions
-		{
-			get
-			{
-				return this.GetTable<Session>();
-			}
-		}
-		
 		public System.Data.Linq.Table<ReceiptRecord> ReceiptRecords
 		{
 			get
@@ -103,6 +95,14 @@ namespace Triangles.Code.DataAccess
 			get
 			{
 				return this.GetTable<Receipt>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Session> Sessions
+		{
+			get
+			{
+				return this.GetTable<Session>();
 			}
 		}
 	}
@@ -303,148 +303,6 @@ namespace Triangles.Code.DataAccess
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Sessions")]
-	public partial class Session : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _UniqueUrl;
-		
-		private EntitySet<Expenditure> _Expenditures;
-		
-		private EntitySet<Receipt> _Receipts;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnUniqueUrlChanging(string value);
-    partial void OnUniqueUrlChanged();
-    #endregion
-		
-		public Session()
-		{
-			this._Expenditures = new EntitySet<Expenditure>(new Action<Expenditure>(this.attach_Expenditures), new Action<Expenditure>(this.detach_Expenditures));
-			this._Receipts = new EntitySet<Receipt>(new Action<Receipt>(this.attach_Receipts), new Action<Receipt>(this.detach_Receipts));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UniqueUrl", DbType="NVarChar(10) NOT NULL", CanBeNull=false)]
-		public string UniqueUrl
-		{
-			get
-			{
-				return this._UniqueUrl;
-			}
-			set
-			{
-				if ((this._UniqueUrl != value))
-				{
-					this.OnUniqueUrlChanging(value);
-					this.SendPropertyChanging();
-					this._UniqueUrl = value;
-					this.SendPropertyChanged("UniqueUrl");
-					this.OnUniqueUrlChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Session_Expenditure", Storage="_Expenditures", ThisKey="Id", OtherKey="SessionId")]
-		public EntitySet<Expenditure> Expenditures
-		{
-			get
-			{
-				return this._Expenditures;
-			}
-			set
-			{
-				this._Expenditures.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Session_Receipt", Storage="_Receipts", ThisKey="Id", OtherKey="SessionId")]
-		public EntitySet<Receipt> Receipts
-		{
-			get
-			{
-				return this._Receipts;
-			}
-			set
-			{
-				this._Receipts.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Expenditures(Expenditure entity)
-		{
-			this.SendPropertyChanging();
-			entity.Session = this;
-		}
-		
-		private void detach_Expenditures(Expenditure entity)
-		{
-			this.SendPropertyChanging();
-			entity.Session = null;
-		}
-		
-		private void attach_Receipts(Receipt entity)
-		{
-			this.SendPropertyChanging();
-			entity.Session = this;
-		}
-		
-		private void detach_Receipts(Receipt entity)
-		{
-			this.SendPropertyChanging();
-			entity.Session = null;
 		}
 	}
 	
@@ -847,6 +705,172 @@ namespace Triangles.Code.DataAccess
 		{
 			this.SendPropertyChanging();
 			entity.Receipt = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Sessions")]
+	public partial class Session : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _UniqueUrl;
+		
+		private System.DateTime _Created;
+		
+		private EntitySet<Expenditure> _Expenditures;
+		
+		private EntitySet<Receipt> _Receipts;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnUniqueUrlChanging(string value);
+    partial void OnUniqueUrlChanged();
+    partial void OnCreatedChanging(System.DateTime value);
+    partial void OnCreatedChanged();
+    #endregion
+		
+		public Session()
+		{
+			this._Expenditures = new EntitySet<Expenditure>(new Action<Expenditure>(this.attach_Expenditures), new Action<Expenditure>(this.detach_Expenditures));
+			this._Receipts = new EntitySet<Receipt>(new Action<Receipt>(this.attach_Receipts), new Action<Receipt>(this.detach_Receipts));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UniqueUrl", DbType="NVarChar(10) NOT NULL", CanBeNull=false)]
+		public string UniqueUrl
+		{
+			get
+			{
+				return this._UniqueUrl;
+			}
+			set
+			{
+				if ((this._UniqueUrl != value))
+				{
+					this.OnUniqueUrlChanging(value);
+					this.SendPropertyChanging();
+					this._UniqueUrl = value;
+					this.SendPropertyChanged("UniqueUrl");
+					this.OnUniqueUrlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Created", DbType="DateTime NOT NULL")]
+		public System.DateTime Created
+		{
+			get
+			{
+				return this._Created;
+			}
+			set
+			{
+				if ((this._Created != value))
+				{
+					this.OnCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._Created = value;
+					this.SendPropertyChanged("Created");
+					this.OnCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Session_Expenditure", Storage="_Expenditures", ThisKey="Id", OtherKey="SessionId")]
+		public EntitySet<Expenditure> Expenditures
+		{
+			get
+			{
+				return this._Expenditures;
+			}
+			set
+			{
+				this._Expenditures.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Session_Receipt", Storage="_Receipts", ThisKey="Id", OtherKey="SessionId")]
+		public EntitySet<Receipt> Receipts
+		{
+			get
+			{
+				return this._Receipts;
+			}
+			set
+			{
+				this._Receipts.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Expenditures(Expenditure entity)
+		{
+			this.SendPropertyChanging();
+			entity.Session = this;
+		}
+		
+		private void detach_Expenditures(Expenditure entity)
+		{
+			this.SendPropertyChanging();
+			entity.Session = null;
+		}
+		
+		private void attach_Receipts(Receipt entity)
+		{
+			this.SendPropertyChanging();
+			entity.Session = this;
+		}
+		
+		private void detach_Receipts(Receipt entity)
+		{
+			this.SendPropertyChanging();
+			entity.Session = null;
 		}
 	}
 }

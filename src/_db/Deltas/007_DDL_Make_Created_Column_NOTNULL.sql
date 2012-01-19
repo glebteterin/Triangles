@@ -1,0 +1,1 @@
+ALTER TABLE Sessions ALTER COLUMN Created datetime not null

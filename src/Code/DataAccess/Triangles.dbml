@@ -10,14 +10,6 @@
       <Association Name="Session_Expenditure" Member="Session" ThisKey="SessionId" OtherKey="Id" Type="Session" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Sessions" Member="Sessions">
-    <Type Name="Session">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="UniqueUrl" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
-      <Association Name="Session_Expenditure" Member="Expenditures" ThisKey="Id" OtherKey="SessionId" Type="Expenditure" />
-      <Association Name="Session_Receipt" Member="Receipts" ThisKey="Id" OtherKey="SessionId" Type="Receipt" />
-    </Type>
-  </Table>
   <Table Name="dbo.ReceiptRecords" Member="ReceiptRecords">
     <Type Name="ReceiptRecord">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -36,6 +28,15 @@
       <Column Name="Description" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
       <Association Name="Receipt_ReceiptRecord" Member="ReceiptRecords" ThisKey="Id" OtherKey="ReceiptId" Type="ReceiptRecord" />
       <Association Name="Session_Receipt" Member="Session" ThisKey="SessionId" OtherKey="Id" Type="Session" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sessions" Member="Sessions">
+    <Type Name="Session">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UniqueUrl" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Session_Expenditure" Member="Expenditures" ThisKey="Id" OtherKey="SessionId" Type="Expenditure" />
+      <Association Name="Session_Receipt" Member="Receipts" ThisKey="Id" OtherKey="SessionId" Type="Receipt" />
     </Type>
   </Table>
 </Database>

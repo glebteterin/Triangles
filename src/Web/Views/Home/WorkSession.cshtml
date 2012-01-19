@@ -1,20 +1,42 @@
 ﻿@using Telerik.Web.Mvc.UI
+
+@model Triangles.Web.Models.HomeModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Треугольники";
 }
 
 <h2>Треугольники</h2>
 
-Этот сайт предназначен для автоматического расчета долгов при коллективных затратах, например когда вы компанией закупаетесь на новый год, а расходы делите между всеми.<br />
-Для начала, добавьте все расходы в таблицу, для этого нажмите кнопку "Создать новую запись".<br />
-Участников, которые ничего не потратили, стоит внести тоже, иначе как мы узнаем, между кем распределять расходы? Просто оставьте ноль в поле Сумма для таких товарищей.<br />
-После ввода всех затрат вы можете узнать кто кому и сколько должен двумя способами: с общим котлом и без него.<br />
-<br />
+@if (Model.IsFirstEnter)
+{
+    <div id="welcome-dialog" title="С прибытием!">
+	    <p>Этот сайт предназначен для автоматического расчета долгов при коллективных затратах, например когда вы компанией закупаетесь на новый год, а расходы делите между всеми.</p>
+        <p>Или вы сделали несколько покупок в разных магазинах и теперь хотите разобраться с чеками.</p>
+        <p>Для начала, добавьте все расходы в таблицу, для этого нажмите кнопку "Создать новую запись".</p>
+        <p>Участников, которые ничего не потратили, стоит внести тоже, иначе как мы узнаем, между кем распределять расходы? Просто оставьте ноль в поле Сумма для таких товарищей.</p>
+        <p>После ввода всех затрат вы можете узнать кто кому и сколько должен.</p>
+    </div>
+    
+    <script type="text/javascript">
+        $().ready(function () {
+            $("#welcome-dialog").dialog({
+                width: 800,
+                modal: true,
+                closeOnEscape: true,
+                autoOpen: true
+            });
 
-@{ Html.RenderAction("Show", "Expenditures", new {sessionUrl = Model}); }
+            $('.ui-widget-overlay').live('click', function () {
+                $('#welcome-dialog').dialog("close");
+            });
+        });
+    </script>
+}
 
-@{ Html.RenderAction("Show", "Receipts", new {sessionUrl = Model}); }
+@{ Html.RenderAction("Show", "Expenditures", new { sessionUrl = Model.SessionUrl }); }
+
+@{ Html.RenderAction("Show", "Receipts", new { sessionUrl = Model.SessionUrl }); }
 
 &copy;&nbsp;Gleb Teterin
 
-@(Html.Telerik().ScriptRegistrar())
+@(Html.Telerik().ScriptRegistrar().jQuery(false))

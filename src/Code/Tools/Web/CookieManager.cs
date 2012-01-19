@@ -7,21 +7,30 @@ namespace Triangles.Code.Tools.Web
 	{
 		private readonly HttpContextBase _context;
 
-		const string FirstTimeCookieName = "ft";
+		const string SessionCookieName = "session";
 
 		public CookieManager(HttpContextBase context)
 		{
 			_context = context;
 		}
 
-		public void SaveUserWasHere()
-		{
-			_context.Response.Cookies.Add(new HttpCookie(FirstTimeCookieName, "True"));
-		}
-
 		public bool IsUserFirstTimeEnter()
 		{
-			return !_context.Request.Cookies.AllKeys.Any(x => x == FirstTimeCookieName);
+			return !_context.Request.Cookies.AllKeys.Any(x => x == SessionCookieName);
+		}
+
+		public string LoadSessionUrl()
+		{
+			if (IsUserFirstTimeEnter())
+				return string.Empty;
+
+			var result = _context.Request.Cookies[SessionCookieName].Value;
+			return result;
+		}
+
+		public void SaveUserSessionUrl(string sessionUrl)
+		{
+			_context.Response.Cookies.Add(new HttpCookie(SessionCookieName, sessionUrl));
 		}
 	}
 }

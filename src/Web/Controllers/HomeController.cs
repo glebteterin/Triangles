@@ -16,12 +16,23 @@ namespace Triangles.Web.Controllers
 
 		public ActionResult Index()
 		{
+			_cookieManager = new CookieManager(this.HttpContext);
+
 			string sessionUrl;
 
 			if (Session["sessionurl"] != null)
+			{
 				sessionUrl = Session["sessionurl"] as string;
+				
+			}
 			else
-				return NewSession();
+			{
+				var sessionFromCookie = _cookieManager.LoadSessionUrl();
+				if (string.IsNullOrWhiteSpace(sessionFromCookie))
+					return NewSession();
+				else
+					sessionUrl = sessionFromCookie;
+			}
 
 			return RedirectToAction("WorkSession", new { sessionUrl });
 		}
@@ -43,7 +54,7 @@ namespace Triangles.Web.Controllers
 				return NewSession();
 
 			var model = new HomeModel {IsFirstEnter = _cookieManager.IsUserFirstTimeEnter(), SessionUrl = sessionUrl};
-			_cookieManager.SaveUserWasHere();
+			_cookieManager.SaveUserSessionUrl(sessionUrl);
 
 			return View(model);
 		}

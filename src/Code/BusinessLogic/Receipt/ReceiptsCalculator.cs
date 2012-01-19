@@ -21,21 +21,53 @@ namespace Triangles.Code.BusinessLogic.Receipt
 			var statuses = new List<ParticipantStatus>();
 
 			foreach (var receipt in receipts)
+			{
+				ParticipantStatus payer;
+
+				//1. обрабатываем плательщика
+				if (!statuses.Any(x => x.Participant == receipt.Payer))
+				{
+					payer = new ParticipantStatus
+					{
+						Participant = receipt.Payer,
+						Real = 0,
+						Expected = 0,
+					};
+
+					statuses.Add(payer);
+				}
+				else
+				{
+					payer = statuses.Single(x => x.Participant == receipt.Payer);
+				}
+
+				if (receipt.Records.Any(x => x.Participant == payer.Participant))
+				{
+					//если плательщик покупал товары тоже
+					//то потратил он сумму чека - свои покупки
+					payer.Real += receipt.Records.Sum(x => x.Amount) - receipt.Records.Where(x => x.Participant == receipt.Payer).Sum(x => x.Amount);
+					//а ожидал потратить 0 (потому что мы уже учли это в реальных затратах)
+				}
+				else
+				{
+					//если плательщик покупал не покупал товары в этом чеке
+					//то потратил он сумму чека
+					payer.Real += receipt.Records.Sum(x => x.Amount);
+					//а ожидал потратить 0
+				}
+
+				//2. обрабатываем участников
 				foreach (var receiptRecord in receipt.Records)
 				{
 					//добавляем в статусы нового участника, если его еще нет
 					if (!statuses.Any(x => x.Participant == receiptRecord.Participant))
-						statuses.Add(new ParticipantStatus { Participant = receiptRecord.Participant });
+						statuses.Add(new ParticipantStatus {Participant = receiptRecord.Participant});
 
 					var status = statuses.Single(x => x.Participant == receiptRecord.Participant);
-					if (receipt.Payer == status.Participant)
-					{
-						//если участник оплачивал чек сам, то он потратил всю сумму по чеку
-						status.Real += receipt.Records.Sum(x => x.Amount);
-						//а если нет, то он ничего не потратил по этому чеку
-					}
-					status.Expected += receipt.Records.Single(x => x.Participant == status.Participant).Amount;
+					if (status.Participant != receipt.Payer)
+						status.Expected += receipt.Records.Single(x => x.Participant == status.Participant).Amount;
 				}
+			}
 
 			return statuses.ToArray();
 		}

@@ -37,6 +37,9 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.2.0.0\lib\net40-client\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2.1\lib\Elmah.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
     </Reference>
@@ -69,6 +72,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ElmahController.cs" />
     <Compile Include="Controllers\CalculationController.cs" />
     <Compile Include="Controllers\ExpendituresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

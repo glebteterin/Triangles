@@ -13,7 +13,8 @@ namespace Triangles.Web
 				.ForMember(dst => dst.Session, opt => opt.Ignore())
 			;
 
-			Mapper.CreateMap<Code.DataAccess.Receipt,Web.Models.Receipt>();
+			Mapper.CreateMap<Code.DataAccess.Receipt,Web.Models.Receipt>()
+				.AfterMap((src, dst) => dst.Records = src.ReceiptRecords.Select(Mapper.Map<Models.ReceiptRecord>).ToArray());
 
 			Mapper.CreateMap<Code.DataAccess.ReceiptRecord,Web.Models.ReceiptRecord>();
 			Mapper.CreateMap<Web.Models.ReceiptRecord, Code.DataAccess.ReceiptRecord>();

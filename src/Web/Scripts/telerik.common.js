@@ -131,10 +131,16 @@
             return prevented;
         },
 
+//        trigger: function (element, eventName, e) {
+//            e = $.extend(e || {}, new $.Event(eventName));
+//            e.stopPropagation();
+//            $(element).trigger(e);
+//            return e.isDefaultPrevented();
+        //        },
+        //заменил для совместимости с jQuery 1.7.1
         trigger: function (element, eventName, e) {
             e = $.extend(e || {}, new $.Event(eventName));
-            e.stopPropagation();
-            $(element).trigger(e);
+            $(element).triggerHandler(e);
             return e.isDefaultPrevented();
         },
 

@@ -16,5 +16,7 @@ namespace Triangles.Web.Models
 
 		[DisplayName("Описание")]
 		public string Description { get; set; }
+
+		public ReceiptRecord[] Records { get; set; }
 	}
 }

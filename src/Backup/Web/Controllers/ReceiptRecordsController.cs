@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using Telerik.Web.Mvc;
 using Triangles.Code.DataAccess;
 using Triangles.Code.Services;
 
@@ -14,16 +15,16 @@ namespace Triangles.Web.Controllers
 		readonly ReceiptRepository _receiptRepository = new ReceiptRepository();
 		readonly ReceiptRecordRepository _receiptRecordRepository = new ReceiptRecordRepository();
 
+		[GridAction]
 		public ActionResult AjaxSelect(int receiptId)
 		{
-			throw new NotImplementedException();
-//			return View(GetReceiptRecordsGridModel(receiptId));
+			return View(GetReceiptRecordsGridModel(receiptId));
 		}
 
+		[GridAction]
 		[AcceptVerbs(HttpVerbs.Post)]
 		public ActionResult AjaxInsert(int receiptId)
 		{
-			throw new NotImplementedException();
 			var receiptRecord = new Models.ReceiptRecord();
 
 			if (TryUpdateModel(receiptRecord))
@@ -33,14 +34,13 @@ namespace Triangles.Web.Controllers
 				_receiptRecordRepository.Insert(newReceiptRecord);
 			}
 
-//			return View(GetReceiptRecordsGridModel(receiptId));
+			return View(GetReceiptRecordsGridModel(receiptId));
 		}
 
+		[GridAction]
 		[AcceptVerbs(HttpVerbs.Post)]
 		public ActionResult AjaxSave(int receiptId, int id)
 		{
-			throw new NotImplementedException();
-
 			var receiptRecord = new Models.ReceiptRecord { Id = id };
 
 			if (TryUpdateModel(receiptRecord))
@@ -48,22 +48,21 @@ namespace Triangles.Web.Controllers
 				_receiptRecordRepository.Update(Mapper.Map<Code.DataAccess.ReceiptRecord>(receiptRecord));
 			}
 
-//			return View(GetReceiptRecordsGridModel(receiptId));
+			return View(GetReceiptRecordsGridModel(receiptId));
 		}
 
+		[GridAction]
 		[AcceptVerbs(HttpVerbs.Post)]
 		public ActionResult AjaxDelete(int receiptId, int id)
 		{
-			throw new NotImplementedException();
-
 			_receiptRecordRepository.Delete(id);
 
-//			return View(GetReceiptRecordsGridModel(receiptId));
+			return View(GetReceiptRecordsGridModel(receiptId));
 		}
 
-//		private GridModel GetReceiptRecordsGridModel(int receiptId)
-//		{
-//			return new GridModel(_receiptRepository.ById(receiptId).ReceiptRecords.Select(x => Mapper.Map<Models.ReceiptRecord>(x)).ToArray());
-//		}
+		private GridModel GetReceiptRecordsGridModel(int receiptId)
+		{
+			return new GridModel(_receiptRepository.ById(receiptId).ReceiptRecords.Select(x => Mapper.Map<Models.ReceiptRecord>(x)).ToArray());
+		}
 	}
 }

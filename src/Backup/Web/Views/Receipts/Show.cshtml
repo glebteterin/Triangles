@@ -1,0 +1,103 @@
+﻿@using Telerik.Web.Mvc.UI
+@using Triangles.Web.Models
+@model string
+
+@{
+	Layout = "";
+}
+
+<h2>Чеки</h2>
+
+@Html.RouteLink("Расчет по чекам", "Calculation", new { controller = "Calculation", action = "Receipts", sessionurl = Model })
+
+@(Html.Telerik().Grid<Receipt>()
+        .Name("ReceiptsGrid")
+    .Localizable("ru-RU")
+    .ToolBar(commands => commands.Insert())
+    .DataKeys(keys => keys.Add(c => c.Id))
+
+    .DataBinding(dataBinding => dataBinding.Ajax()
+            .Select("AjaxSelect", "Receipts")
+            .Insert("AjaxInsert", "Receipts")
+            .Update("AjaxSave", "Receipts")
+            .Delete("AjaxDelete", "Receipts"))
+    .ClientRowTemplate(grid => "<div class='receipt-details'>" +
+                                               "<#= Payer #> <#= Description #> <#= Records[0].Amount #> <#= Records[0].Participant #>" +
+                               "<div class='commands'>" + grid.EditButton(null) + grid.DeleteButton(null) + "</div>" +
+                               "</div>"
+            )
+    .DetailView(details => details.ClientTemplate(
+        Html.Telerik().Grid<ReceiptRecord>()
+        .Name("ReceiptRecords_<#= Id #>")
+        .Localizable("ru-RU")
+        .ToolBar(commands => commands.Insert())
+        .DataKeys(keys => keys.Add(c => c.Id))
+        .Columns(columns =>
+        {
+            columns.Bound(r => r.Participant).Width(200);
+            columns.Bound(r => r.Amount).Width(140);
+            columns.Bound(r => r.Description).Width(300);
+            columns.Command(commands =>
+            {
+                commands.Edit().ButtonType(GridButtonType.Text);
+                commands.Delete().ButtonType(GridButtonType.Text);
+            }).Width(200);
+        })
+        .ClientEvents(events => events.OnRowDataBound("receiptRecords_onRowDataBound"))
+        .DataBinding(dataBinding => dataBinding.Ajax()
+            .Select("AjaxSelect", "ReceiptRecords", new { receiptId = "<#= Id #>" })
+            .Insert("AjaxInsert", "ReceiptRecords", new { receiptId = "<#= Id #>" })
+            .Update("AjaxSave", "ReceiptRecords", new { receiptId = "<#= Id #>" })
+            .Delete("AjaxDelete", "ReceiptRecords", new { receiptId = "<#= Id #>" }))
+         .Editable(editing => editing.Mode(GridEditMode.InForm))
+        .ToHtmlString()
+        ))
+
+    .ClientEvents(events => events.OnRowDataBound("receipts_onRowDataBound"))
+    .Columns(columns =>
+    {
+        columns.Bound(o => o.Payer).Title("Кто платил").Width(200);
+        columns.Bound(o => o.Description).Title("Примечание");
+        columns.Command(commands =>
+        {
+            commands.Edit().ButtonType(GridButtonType.Text);
+            commands.Delete().ButtonType(GridButtonType.Text);
+        }).Width(200);
+
+    })
+    .Sortable(sorting => sorting.Enabled(true))
+    .Editable(editing => editing.Mode(GridEditMode.InForm))
+)
+
+<script type="text/javascript">
+    function expandFirstRow(grid, row) {
+        if (grid.$rows().index(row) == 0) {
+            grid.expandRow(row);
+        }
+    }
+
+    function receipts_onRowDataBound(e) {
+        var row = e.row;
+        var dataItem = e.dataItem;
+
+        var partRowContent = "<table>";
+        var receiptSum = 0;
+        for (var i = 0; i < dataItem.Records.length; ++i) {
+            receiptSum += dataItem.Records[i].Amount;
+            partRowContent += "<tr><td>"+dataItem.Records[i].Participant+"<td><td>"+dataItem.Records[0].Amount+"<td></tr>";
+        }
+        partRowContent += "</table>";
+
+        var rowContent = "<div>Чек на " + receiptSum + "оплатил <strong>" + dataItem.Payer + "</strong></div>" + partRowContent;
+
+        $(".receipt-details", row).html(rowContent);
+        
+        var grid = $(this).data('tGrid');
+        expandFirstRow(grid, e.row);
+    }
+
+    function receiptRecords_onRowDataBound(e) {
+        var grid = $(this).data('tGrid');
+        expandFirstRow(grid, e.row);
+    }
+</script>

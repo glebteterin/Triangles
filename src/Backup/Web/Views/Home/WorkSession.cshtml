@@ -1,4 +1,6 @@
-﻿@model Triangles.Web.Models.HomeModel
+﻿@using Telerik.Web.Mvc.UI
+
+@model Triangles.Web.Models.HomeModel
 @{
     ViewBag.Title = "Треугольники";
 }
@@ -36,3 +38,5 @@
 @{ Html.RenderAction("Show", "Receipts", new { sessionUrl = Model.SessionUrl }); }
 
 &copy;&nbsp;Gleb Teterin
+
+@(Html.Telerik().ScriptRegistrar().jQuery(false))

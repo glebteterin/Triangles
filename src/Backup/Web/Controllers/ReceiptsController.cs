@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using Telerik.Web.Mvc;
 using Triangles.Code.Services;
 using Triangles.Web.Mappers;
 using Triangles.Web.Models;
@@ -22,17 +23,16 @@ namespace Triangles.Web.Controllers
 			return View((object)sessionUrl);
 		}
 
+		[GridAction]
 		public ActionResult AjaxSelect(string sessionUrl)
 		{
-			throw new NotImplementedException();
-//			return View(new GridModel(_sessionService.GetByUrl(sessionUrl).Receipts.Select(x => Mapper.Map<Receipt>(x)).ToArray()));
+			return View(new GridModel(_sessionService.GetByUrl(sessionUrl).Receipts.Select(x => Mapper.Map<Receipt>(x)).ToArray()));
 		}
 
+		[GridAction]
 		[AcceptVerbs(HttpVerbs.Post)]
 		public ActionResult AjaxInsert(string sessionUrl)
 		{
-			throw new NotImplementedException();
-
 			var receipt = new Models.Receipt();
 
 			if (TryUpdateModel(receipt))
@@ -42,14 +42,13 @@ namespace Triangles.Web.Controllers
 				_repository.Insert(newExpenditure);
 			}
 
-//			return View(new GridModel(_sessionService.GetByUrl(sessionUrl).Receipts.Select(x => Mapper.Map<Receipt>(x)).ToArray()));
+			return View(new GridModel(_sessionService.GetByUrl(sessionUrl).Receipts.Select(x => Mapper.Map<Receipt>(x)).ToArray()));
 		}
 
+		[GridAction]
 		[AcceptVerbs(HttpVerbs.Post)]
 		public ActionResult AjaxSave(int id, string sessionUrl)
 		{
-			throw new NotImplementedException();
-
 			var receipt = new Models.Receipt { Id = id };
 
 			if (TryUpdateModel(receipt))
@@ -57,17 +56,16 @@ namespace Triangles.Web.Controllers
 				_repository.Update(Mapper.Map<Code.DataAccess.Receipt>(receipt));
 			}
 
-//			return View(new GridModel(_sessionService.GetByUrl(sessionUrl).Receipts.Select(x => Mapper.Map<Receipt>(x)).ToArray()));
+			return View(new GridModel(_sessionService.GetByUrl(sessionUrl).Receipts.Select(x => Mapper.Map<Receipt>(x)).ToArray()));
 		}
 
+		[GridAction]
 		[AcceptVerbs(HttpVerbs.Post)]
 		public ActionResult AjaxDelete(int id, string sessionUrl)
 		{
-			throw new NotImplementedException();
-
 			_repository.Delete(id);
 
-//			return View(new GridModel(_sessionService.GetByUrl(sessionUrl).Receipts.Select(x => Mapper.Map<Receipt>(x)).ToArray()));
+			return View(new GridModel(_sessionService.GetByUrl(sessionUrl).Receipts.Select(x => Mapper.Map<Receipt>(x)).ToArray()));
 		}
 	}
 }

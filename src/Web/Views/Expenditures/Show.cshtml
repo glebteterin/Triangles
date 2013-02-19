@@ -1,5 +1,4 @@
 ﻿@using System.Collections
-@using Telerik.Web.Mvc.UI
 @using Triangles.Web.Models
 
 @model ExpendituresModel
@@ -20,34 +19,6 @@
 <br />
 <br />
 
-	@(Html.Telerik().Grid<Expenditure>(Model.Expenditures)
-    .Name("ExpendituresGrid")
-    .Localizable("ru-RU")
-    .ToolBar(commands => commands.Insert())
-    .DataKeys(keys => keys.Add(c => c.Id))
-
-    .DataBinding(dataBinding => dataBinding.Ajax()
-    .Select("AjaxSelect", "Expenditures")
-    .Insert("AjaxInsert", "Expenditures")
-    .Update("AjaxSave", "Expenditures")
-    .Delete("AjaxDelete", "Expenditures"))
-
-    .Columns(columns =>
-    {
-        columns.Bound(o => o.Who).Title("Кто").Width(200);
-        columns.Bound(o => o.Amount).Title("Сумма").Width(200);
-        columns.Bound(o => o.Description).Title("Примечание");
-        columns.Command(commands =>
-        {
-            commands.Edit().ButtonType(GridButtonType.Text);
-            commands.Delete().ButtonType(GridButtonType.Text);
-        }).Width(200);
-
-    })
-    .ClientEvents(events => events
-         .OnSave("onExpenditureSave"))
-    .Sortable(sorting => sorting.Enabled(true))
-    .Editable(editing => editing.Mode(GridEditMode.InForm))
 
 )
 <br />

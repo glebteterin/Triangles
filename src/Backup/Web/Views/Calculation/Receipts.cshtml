@@ -1,0 +1,29 @@
+﻿@using Triangles.Web.Models
+@model CalculationModel
+
+@{
+    ViewBag.Title = "Треугольники / Расчет по чекам";
+}
+
+<h2>Расчет по чекам</h2>
+
+<table>
+    <tr>
+        <td>Кто</td>
+        <td>Кому</td>
+        <td>Сумма</td>
+    </tr>
+
+    @{ foreach (var transfer in Model.Transfers)
+       {
+           
+           <tr>
+                <td>@transfer.From</td>
+                <td>@transfer.To</td>
+                <td>@transfer.Amount</td>
+           </tr>
+       }
+    }
+</table>
+
+@Html.ActionLink("Вернуться к затратам", "Index", "Home", new { sessionurl = Model.SessionUrl }, null)

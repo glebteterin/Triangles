@@ -1,7 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
+using Telerik.Web.Mvc;
 using Triangles.Code.DataAccess;
 using Triangles.Code.Services;
 using Triangles.Web.Mappers;
@@ -20,16 +20,16 @@ namespace Triangles.Web.Controllers
 			return View(new ExpendituresModel{Expenditures = GetExpenditures(sessionUrl), SessionUrl = sessionUrl});
 		}
 
+		[GridAction]
 		public ActionResult AjaxSelect(string sessionUrl)
 		{
-			throw new NotImplementedException();
-//			return View(new GridModel(GetExpenditures(sessionUrl)));
+			return View(new GridModel(GetExpenditures(sessionUrl)));
 		}
 
+		[GridAction]
 		[AcceptVerbs(HttpVerbs.Post)]
 		public ActionResult AjaxInsert(string sessionUrl)
 		{
-			throw new NotImplementedException();
 			var expenditure = new Models.Expenditure();
 
 			if (TryUpdateModel(expenditure) && ValidateParticipantDuplicating(expenditure, sessionUrl, ModelState))
@@ -39,13 +39,13 @@ namespace Triangles.Web.Controllers
 				_repository.Insert(newExpenditure);
 			}
 
-//			return View(new GridModel(GetExpenditures(sessionUrl)));
+			return View(new GridModel(GetExpenditures(sessionUrl)));
 		}
 
+		[GridAction]
 		[AcceptVerbs(HttpVerbs.Post)]
 		public ActionResult AjaxSave(int id, string sessionUrl)
 		{
-			throw new NotImplementedException();
 			var expenditure = new Models.Expenditure { Id = id };
 
 			if (TryUpdateModel(expenditure) && ValidateParticipantDuplicating(expenditure, sessionUrl, ModelState))
@@ -53,16 +53,16 @@ namespace Triangles.Web.Controllers
 				_repository.Save(ExpenditureMapper.Map(expenditure));
 			}
 
-//			return View(new GridModel(GetExpenditures(sessionUrl)));
+			return View(new GridModel(GetExpenditures(sessionUrl)));
 		}
 
+		[GridAction]
 		[AcceptVerbs(HttpVerbs.Post)]
 		public ActionResult AjaxDelete(int id, string sessionUrl)
 		{
-			throw new NotImplementedException();
 			_repository.Delete(id);
 
-//			return View(new GridModel(GetExpenditures(sessionUrl)));
+			return View(new GridModel(GetExpenditures(sessionUrl)));
 		}
 
 		private Expenditure[] GetExpenditures(string sessionUrl)

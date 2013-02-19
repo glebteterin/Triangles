@@ -1,13 +1,10 @@
-﻿@using System.Collections
-@using Triangles.Web.Models
+﻿@using Triangles.Web.Models
 
 @model ExpendituresModel
 @{
-    Layout = "";
+	Layout = null;
 }
 
-
-@Html.ActionLink("Новая сессия", "NewSession", "Home")&nbsp;
 <div id="expenditureCalcButtons">
 @{ if (Model.Expenditures.Any())
    {
@@ -16,12 +13,6 @@
    }
 }
 </div>
-<br />
-<br />
-
-
-)
-<br />
 
 <script type="text/javascript">
     function onExpenditureSave(e) {

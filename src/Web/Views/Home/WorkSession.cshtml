@@ -1,9 +1,7 @@
 ﻿@model Triangles.Web.Models.HomeModel
 @{
-    ViewBag.Title = "Треугольники";
+	ViewBag.Title = "Треугольники";
 }
-
-<h2>Треугольники</h2>
 
 @if (Model.IsFirstEnter)
 {
@@ -35,4 +33,3 @@
 
 @{ Html.RenderAction("Show", "Receipts", new { sessionUrl = Model.SessionUrl }); }
 
-&copy;&nbsp;Gleb Teterin

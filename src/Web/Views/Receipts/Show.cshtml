@@ -1,13 +1,98 @@
 ﻿@model string
 
 @{
-	Layout = "";
+	Layout = null;
 }
 
-<h2>Чеки</h2>
+<h2>By Receipts</h2>
 
-@Html.RouteLink("Расчет по чекам", "Calculation", new { controller = "Calculation", action = "Receipts", sessionurl = Model })
+<div class="row">
+	<div class="span12">
+		<div class="row">
+			<div class="span2">
+				<input class="span2" type="text" placeholder="Payer" value="Глеб" />
+			</div>
+			<div class="span9 offset1">
+				<input class="span9" type="text" placeholder="Description" value="Описание" />
+			</div>
+		</div>
+	
+		<div class="row">
+			<div class="span2 offset1">
+				<input class="span2" type="text" placeholder="Participant name" value="Альбина" />
+			</div>
+			<div class="span9">
+				<input class="span2" type="text" placeholder="Participant name" value="10000" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="span2 offset1">
+				<input class="span2" type="text" placeholder="Participant name" value="Данил" />
+			</div>
+			<div class="span9">
+				<input class="span2" type="text" placeholder="Participant name" value="20000" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="span2 offset1">
+				<input class="span2" type="text" placeholder="Participant name" value="" />
+			</div>
+			<div class="span9">
+				<input class="span2" type="text" placeholder="Participant debt" value="" />
+			</div>
+		</div>
+	</div>
+</div>
 
+<div class="row">
+	<div class="span12">
+		<div class="row">
+			<div class="span2">
+				<input class="span2" type="text" placeholder="Payer" value="Глеб" />
+			</div>
+			<div class="span9 offset1">
+				<input class="span9" type="text" placeholder="Description" value="Описание" />
+			</div>
+		</div>
+	
+		<div class="row">
+			<div class="span2 offset1">
+				<input class="span2" type="text" placeholder="Participant name" value="Альбина" />
+			</div>
+			<div class="span9">
+				<input class="span2" type="text" placeholder="Participant name" value="10000" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="span2 offset1">
+				<input class="span2" type="text" placeholder="Participant name" value="Данил" />
+			</div>
+			<div class="span9">
+				<input class="span2" type="text" placeholder="Participant name" value="20000" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="span2 offset1">
+				<input class="span2" type="text" placeholder="Participant name" value="" />
+			</div>
+			<div class="span9">
+				<input class="span2" type="text" placeholder="Participant debt" value="" />
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="span2 offset1">&nbsp;</div>
+</div>
+<div class="row">
+	<div class="span3">
+		<button class="btn btn-smal">+Receipt</button>
+	</div>
+</div>
+
+<br/>
+@Html.RouteLink("Calculate!", "Calculation", new { controller = "Calculation", action = "Receipts", sessionurl = Model }, new {@class = "btn btn-large btn-primary"})
 
 <script type="text/javascript">
     function expandFirstRow(grid, row) {
